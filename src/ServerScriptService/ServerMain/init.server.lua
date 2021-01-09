@@ -12,4 +12,4 @@ FabricLib.useReplication(fabric)
 FabricLib.useTags(fabric)
 
 print(fabric)
-fabric:registerUnitsIn(script.Components)
+fabric:registerUnitsIn(script.Units)
