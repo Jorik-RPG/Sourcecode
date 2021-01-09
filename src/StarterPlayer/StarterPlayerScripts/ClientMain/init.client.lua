@@ -9,4 +9,4 @@ FabricLib.useBatching(fabric)
 
 fabric.DEBUG = false
 
-fabric:registerUnitsIn(ReplicatedStorage.Packages.Components)
+fabric:registerUnitsIn(ReplicatedStorage.Packages.Units)
