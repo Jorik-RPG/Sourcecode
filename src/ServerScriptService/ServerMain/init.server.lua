@@ -5,7 +5,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 -- Modules
-local FabricLib = require(ReplicatedStorage.Packages:WaitForChild("fabric"))
+local FabricLib = require(ReplicatedStorage.Packages:WaitForChild("Fabric"))
 
 ---init fabric
 local fabric = FabricLib.Fabric.new("SERVER")
