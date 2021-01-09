@@ -26,17 +26,17 @@ return {
 				hinge = hinge * CFrame.Angles(0,math.rad(self.open and 1 or -1),0)
 				local newCF = hinge * CFrame.new(door.Size.X/2, 0, 0)
 
-				self:getUnit("Transmitter"):sendWithPredictiveLayer({
-					CFrame = newCF
-				}, "setCFrame", newCF)
-				
+				self.ref.CFrame = newCF
+				-- self:getUnit("Transmitter"):sendWithPredictiveLayer({
+				-- 	CFrame = newCF
+				-- }, "setCFrame", newCF)
+
 				RunService.RenderStepped:Wait()
 			end
 
 			self.open = not self.open
 			self.running = false
 		end)
-
 	end;
 
 	batch = function(on)
@@ -53,7 +53,7 @@ return {
 	end,
 
 	onUpdated = function(self)
-
+		print(self)
 	end,
 
 	effects = {
