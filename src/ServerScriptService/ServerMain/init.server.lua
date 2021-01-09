@@ -1,4 +1,4 @@
---@@ Author .Trix
+--@@ Author .Trix, DylWithlt
 
 -- Services
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -7,9 +7,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local FabricLib = require(ReplicatedStorage.Packages:WaitForChild("fabric"))
 
 ---init fabric
-local fabric = FabricLib.Fabric.new("example")
+local fabric = FabricLib.Fabric.new("SERVER")
 FabricLib.useReplication(fabric)
 FabricLib.useTags(fabric)
 fabric.DEBUG = false
 
-fabric:registerUnitsIn(script.Components)
+fabric:registerUnitsIn(script.Units)
