@@ -1,5 +1,5 @@
 return {
-	name = "Transmitter";
+	name = "Door";
 	tag = "Door";
 
 	units = {
