@@ -1,4 +1,4 @@
---@@ Author .Trix
+--@@ Author .Trix, DylWithlt
 
 -- Services
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
