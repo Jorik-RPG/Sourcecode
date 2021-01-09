@@ -10,8 +10,8 @@ return {
 		transparency = 0;
 	};
 
-    onInitialize = function(self)
-        print("Testing")
+	onInitialize = function(self)
+
 	end;
 
 	onClientSetTransparency = function(self, _player, amount)

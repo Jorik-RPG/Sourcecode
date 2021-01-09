@@ -23,7 +23,8 @@
     "TweenInfo",
     "workspace",
     "Ray",
-    "delay"
+    "delay",
+    "BrickColor"
   ],
   "Lua.runtime.version": "Lua 5.1",
   "Lua.diagnostics.disable": [
