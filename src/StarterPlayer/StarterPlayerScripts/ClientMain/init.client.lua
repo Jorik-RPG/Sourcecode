@@ -3,7 +3,7 @@ local RunService = game:GetService("RunService")
 
 local FabricLib = require(ReplicatedStorage.Packages.Fabric)
 
-local fabric = FabricLib.Fabric.new("CLIENT")
+local fabric = FabricLib.Fabric.new("example")
 FabricLib.useReplication(fabric)
 FabricLib.useTags(fabric)
 FabricLib.useBatching(fabric)
