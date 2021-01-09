@@ -8,7 +8,7 @@ local RunService = game:GetService("RunService")
 local FabricLib = require(ReplicatedStorage.Packages:WaitForChild("Fabric"))
 
 ---init fabric
-local fabric = FabricLib.Fabric.new("SERVER")
+local fabric = FabricLib.Fabric.new("example")
 FabricLib.useReplication(fabric)
 FabricLib.useTags(fabric)
 fabric.DEBUG = RunService:IsStudio()
