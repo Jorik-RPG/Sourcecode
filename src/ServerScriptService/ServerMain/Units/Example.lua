@@ -7,21 +7,19 @@ return {
 	};
 
 	defaults = {
-		transparency = 0;
+        transparency = 0;
+        open = false;
+        running = false;
 	};
 
 	onInitialize = function(self)
 
 	end;
 
-	onClientSetTransparency = function(self, _player, amount)
-		if math.random() > 0.2 then
-			self:addLayer(self, {
-				transparency = amount
-			})
-		else
-			print("Ignore")
-		end
+	setCFrame = function(self, _player, cf)
+        self:addLayer(self, {
+            CFrame = cf
+        })
 	end;
 
 	onUpdated = function(self)
