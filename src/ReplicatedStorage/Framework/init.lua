@@ -14,7 +14,7 @@ function Framework.new(settings)
     settings = settings or error("Framework.new: Didn't provide settings argument")
 
     local self = setmetatable({
-        Roact = require(script.Parent),
+        Roact = require(script.Parent.Packages.Roact),
         Local = ( settings.PathToLocal and settings.PathToLocal:GetDesendants() ) or error("Local modules path needed"),
         Shared = settings.PathToLocal and settings.PathToShared:GetDesendants() or false,
         Packages = settings.PathToPackages and settings.PathToPackages:GetDesendants() or false,
