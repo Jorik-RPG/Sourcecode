@@ -15,7 +15,7 @@ local functionFolder = script:FindFirstChild("Functions")
 --[[ constructor ]]--
 
 function Clothing.new()
-    local self = {
+    local self = setmetatable({
         _Queue = {},
         _Type = runService:IsServer() and 0 or runService:IsClient() and 1,
         _Events = eventFolder or Instance.new("Folder"),
@@ -23,7 +23,7 @@ function Clothing.new()
         _Comunication = comunicationFolder or Instance.new("Folder"),
 
         _Started = false
-    }
+    }, Clothing)
 
     if self._Events.Name == "Events" and self._Functions.Name == "Functions" then
         self._Started = true
@@ -36,7 +36,7 @@ function Clothing.new()
         self._Functions.Parent = self._Comunication
     end
 
-    return setmetatable(self, Clothing)
+    return self
 end
 
 function Clothing:CreateEvent(eventName)
