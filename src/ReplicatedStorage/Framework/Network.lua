@@ -45,7 +45,7 @@ function Framework:CreateEvent(eventName)
     local remoteInstance = Instance.new("RemoteEvent")
     remoteInstance.Name = eventName
     remoteInstance.Parent = self._Events
-    
+
     return remoteInstance
 end
 
