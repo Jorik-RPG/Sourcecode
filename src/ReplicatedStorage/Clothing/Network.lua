@@ -50,7 +50,7 @@ function Clothing:CreateEvent(eventName)
 end
 
 function Clothing:GetEvent(eventName)
-   eventName = eventName and type(eventName) == "string" or error("Event name is not provided")
+    eventName = eventName and type(eventName) == "string" or error("Event name is not provided")
 
     local returnInstance = nil
 
