@@ -20,7 +20,7 @@ end
 ---@param moduleName string
 ---@return table
 function Clothing:GetLocal(moduleName)
-    local generatedString = httpService:GenerateUUID(false)
+    local generatedString = httpService:GenerateGUID(false)
     local moduleFound = nil
 
     for _, module in ipairs(self.Local) do
@@ -78,7 +78,7 @@ function Clothing:GetShared(moduleName)
         assert(false, "No shared path was given in the constructor")
     end
 
-    local generatedString = httpService:GenerateUUID(false)
+    local generatedString = httpService:GenerateGUID(false)
     local moduleFound = nil
 
     for _, module in ipairs(self.Shared) do
@@ -127,9 +127,4 @@ function Clothing:GetAllShared(limit)
     end
 end
 
-
-
-
-
-
-
+return Clothing

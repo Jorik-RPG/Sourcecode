@@ -68,3 +68,5 @@ function Clothing:GetEvent(eventName)
         return { Success = false, Error = "Couldn't find remote event" }
     end
 end
+
+return Clothing

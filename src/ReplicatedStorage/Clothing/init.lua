@@ -25,7 +25,9 @@ function Clothing.new(settings)
     self.Started = function()
         return Promise.new(function(resolve)
             if self._Started then resolve() else
-                repeat runService.Heartbeat:Wait() until self._Started and resolve()
+                repeat
+                    runService.Stepped:Wait()
+                until self._Started and resolve()
             end
         end)
     end
@@ -37,3 +39,5 @@ function Clothing.new(settings)
 
     return self
 end
+
+return Clothing

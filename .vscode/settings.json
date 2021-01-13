@@ -1,34 +1,33 @@
 {
-  "files.exclude": {
-    "src/_framework/": true,
-    ".vscode": true
-  },
   "Lua.diagnostics.globals": [
-    "Enum",
-    "script",
-    "typeof",
-    "Instance",
-    "game",
-    "tick",
-    "Vector3",
-    "Random",
-    "CFrame",
-    "warn",
-    "wait",
-    "spawn",
-    "bit32",
-    "Color3",
-    "UDim2",
-    "Vector2",
-    "TweenInfo",
-    "workspace",
-    "Ray",
-    "delay",
-    "BrickColor"
+      "game",
+      "game",
+      "typeof",
+      "script",
+      "workspace",
+      "Instance",
+      "time",
+      "CFrame",
+      "wait",
+      "Vector3",
+      "Enum",
+      "Ray",
+      "remodel",
+      "Color3",
+      "TweenInfo",
+      "Vector2",
+      "UDim2",
+      "delay",
+      "elapsedTime",
+      "unpack"
   ],
-  "Lua.runtime.version": "Lua 5.1",
   "Lua.diagnostics.disable": [
-    "unused-function",
-    "trailing-space"
+      "unused-local",
+      "empty-block",
+      "lowercase-global",
+      "unused-function",
+      "undefined-global",
+      "undefined-field",
+      "redundant-parameter"
   ]
 }
