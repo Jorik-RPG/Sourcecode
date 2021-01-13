@@ -1,8 +1,8 @@
 --@@ Author Trix
 
-local Clothing = {}
-Clothing.__index = Clothing
-Clothing.ClassName = "ClothingModules"
+local Framework = {}
+Framework.__index = Framework
+Framework.ClassName = "FrameworkModules"
 
 -- Services
 local httpService = game:GetService("HttpService")
@@ -11,15 +11,15 @@ local httpService = game:GetService("HttpService")
 
 ---@param self table
 ---@return table
-function Clothing.new(self)
-    return setmetatable(self, Clothing)
+function Framework.new(self)
+    return setmetatable(self, Framework)
 end
 
 --[[ Local module methods ]]
 
 ---@param moduleName string
 ---@return table
-function Clothing:GetLocal(moduleName)
+function Framework:GetLocal(moduleName)
     local generatedString = httpService:GenerateGUID(false)
     local moduleFound = nil
 
@@ -47,7 +47,7 @@ function Clothing:GetLocal(moduleName)
 end
 
 ---@return table
-function Clothing:GetAllLocal(limit)
+function Framework:GetAllLocal(limit)
     limit = limit or 0
 
     if #self.Local > 0 then
@@ -73,7 +73,7 @@ end
 
 ---@param moduleName string
 ---@return table
-function Clothing:GetShared(moduleName)
+function Framework:GetShared(moduleName)
     if self.Shared == false then
         assert(false, "No shared path was given in the constructor")
     end
@@ -105,7 +105,7 @@ function Clothing:GetShared(moduleName)
 end
 
 ---@return table
-function Clothing:GetAllShared(limit)
+function Framework:GetAllShared(limit)
     limit = limit or 0
 
     if #self.Shared > 0 then
@@ -127,4 +127,4 @@ function Clothing:GetAllShared(limit)
     end
 end
 
-return Clothing
+return Framework

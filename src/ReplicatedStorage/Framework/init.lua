@@ -1,7 +1,7 @@
 --@@ Author Trix; Modified by 4thAxis
 
-local Clothing = {}
-Clothing.__index = Clothing
+local Framework = {}
+Framework.__index = Framework
 
 -- Services
 local httpService = game:GetService("HttpService")
@@ -10,8 +10,8 @@ local runService = game:GetService("RunService")
 -- Modules
 local Promise = require(script.Parent.Packages.Promise)
 
-function Clothing.new(settings)
-    settings = settings or error("Clothing.new: Didn't provide settings argument")
+function Framework.new(settings)
+    settings = settings or error("Framework.new: Didn't provide settings argument")
 
     local self = setmetatable({
         Roact = require(script.Parent),
@@ -20,7 +20,7 @@ function Clothing.new(settings)
         Packages = settings.PathToPackages and settings.PathToPackages:GetDesendants() or false,
 
         _Started = false
-    }, Clothing)
+    }, Framework)
 
     self.Started = function()
         return Promise.new(function(resolve)
@@ -40,4 +40,4 @@ function Clothing.new(settings)
     return self
 end
 
-return Clothing
+return Framework

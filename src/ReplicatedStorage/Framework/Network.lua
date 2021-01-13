@@ -1,8 +1,8 @@
 --@@ Author Trix
 
-local Clothing = {}
-Clothing.__index = Clothing
-Clothing.ClassName = "ClothingNetwork"
+local Framework = {}
+Framework.__index = Framework
+Framework.ClassName = "FrameworkNetwork"
 
 -- Services
 local runService = game:GetService("RunService")
@@ -14,7 +14,7 @@ local functionFolder = script:FindFirstChild("Functions")
 
 --[[ constructor ]]--
 
-function Clothing.new()
+function Framework.new()
     local self = setmetatable({
         _Queue = {},
         _Type = runService:IsServer() and 0 or runService:IsClient() and 1,
@@ -23,7 +23,7 @@ function Clothing.new()
         _Comunication = comunicationFolder or Instance.new("Folder"),
 
         _Started = false
-    }, Clothing)
+    }, Framework)
 
     if self._Events.Name == "Events" and self._Functions.Name == "Functions" then
         self._Started = true
@@ -39,7 +39,7 @@ function Clothing.new()
     return self
 end
 
-function Clothing:CreateEvent(eventName)
+function Framework:CreateEvent(eventName)
     eventName = eventName and type(eventName) == "string" and self._Type == 0 or error("Not on server, name missing")
 
     local remoteInstance = Instance.new("RemoteEvent")
@@ -49,7 +49,7 @@ function Clothing:CreateEvent(eventName)
     return remoteInstance
 end
 
-function Clothing:GetEvent(eventName)
+function Framework:GetEvent(eventName)
     eventName = eventName and type(eventName) == "string" or error("Event name is not provided")
 
     local returnInstance = nil
@@ -69,4 +69,4 @@ function Clothing:GetEvent(eventName)
     end
 end
 
-return Clothing
+return Framework
