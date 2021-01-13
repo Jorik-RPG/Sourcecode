@@ -12,14 +12,15 @@ local Promise = require(script.Parent.Packages.Promise)
 
 function Clothing.new(settings)
     settings = settings or error("Clothing.new: Didn't provide settings argument")
-    local self = {
+
+    local self = setmetatable({
         Roact = require(script.Parent),
         Local = ( settings.PathToLocal and settings.PathToLocal:GetDesendants() ) or error("Local modules path needed"),
         Shared = settings.PathToLocal and settings.PathToShared:GetDesendants() or false,
         Packages = settings.PathToPackages and settings.PathToPackages:GetDesendants() or false,
 
         _Started = false
-    }
+    }, Clothing)
 
     self.Started = function()
         return Promise.new(function(resolve)
@@ -34,6 +35,7 @@ function Clothing.new(settings)
 
     self._Started = true
 
-    return setmetatable(self,Clothing)
+    return self
 end
 
+--
