@@ -1,4 +1,4 @@
---@@ Author Trix
+--@@ Author Trix; Modified by 4thAxis
 
 local Clothing = {}
 Clothing.__index = Clothing
@@ -11,25 +11,20 @@ local runService = game:GetService("RunService")
 local Promise = require(script.Parent.Packages.Promise)
 
 function Clothing.new(settings)
+    settings = settings or error("Clothing.new: Must provide settings as argument")
     local self = {
-        Roact = require(script.Roact),
-        Local = settings.PathToLocal and { unpack(settings.PathToLocal:GetDesendants()) } or assert(false, "Local modules path needed"),
-        Shared = settings.PathToLocal and { unpack(settings.PathToShared:GetDesendants()) } or false,
-        Packages = settings.PathToPackages and { unpack(settings.PathToPackages:GetDesendants()) } or false,
+        Roact = require(script.Parent),
+        Local = ( settings.PathToLocal and settings.PathToLocal:GetDesendants() ) or error("Local modules path needed"),
+        Shared = settings.PathToLocal and settings.PathToShared:GetDesendants() or false,
+        Packages = settings.PathToPackages and settings.PathToPackages:GetDesendants() or false,
 
         _Started = false
     }
 
-    self.Started = function()
+    Started = function()
         return Promise.new(function(resolve)
-            if self._Started then
-                resolve()
-            else
-                repeat
-                    runService.Heartbeat:Wait()
-                until self._Started == true
-
-                resolve()
+            if self._Started then resolve() else
+                repeat runService.Heartbeat:Wait() until self._Started and resolve() 
             end
         end)
     end
@@ -39,5 +34,6 @@ function Clothing.new(settings)
 
     self._Started = true
 
-    return setmetatable(self, Clothing)
+    return setmetatable(self,Clothing)
 end
+
