@@ -12,10 +12,10 @@ end
 
 local function RequireModules()
     for _, module in ipairs(ModulesDirectory:GetChildren()) do
+        if not module:IsA("ModuleScript") then continue end
+
         local staticClass = require(module)
-        if staticClass.Run then
-            table.insert(modules, staticClass)
-        end
+        table.insert(modules, staticClass)
     end
 
     RunModules()
