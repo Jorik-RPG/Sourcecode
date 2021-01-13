@@ -11,7 +11,7 @@ local runService = game:GetService("RunService")
 local Promise = require(script.Parent.Packages.Promise)
 
 function Clothing.new(settings)
-    settings = settings or error("Clothing.new: Must provide settings as argument")
+    settings = settings or error("Clothing.new: Didn't provide settings argument")
     local self = {
         Roact = require(script.Parent),
         Local = ( settings.PathToLocal and settings.PathToLocal:GetDesendants() ) or error("Local modules path needed"),
@@ -21,7 +21,7 @@ function Clothing.new(settings)
         _Started = false
     }
 
-    Started = function()
+    self.Started = function()
         return Promise.new(function(resolve)
             if self._Started then resolve() else
                 repeat runService.Heartbeat:Wait() until self._Started and resolve() 
