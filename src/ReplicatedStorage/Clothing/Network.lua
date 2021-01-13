@@ -39,24 +39,32 @@ function Clothing.new()
     return setmetatable(self, Clothing)
 end
 
-function Clothing:AddToQueue(network, arguments)
-    assert(arguments and type(arguments) == "table", "Arguments not provided")
-    assert(network and (network:IsA("RemoteEvent") or network:IsA("RemoteEvent") or network:IsA("BindableEvent") or network:IsA("BindableFunction")), "Network not provided")
-
-    self._Queue[#self._Queue+1] = { Remote = network, Arguments = arguments }
-
-    return #self._Queue
-end
-
 function Clothing:CreateEvent(eventName)
-    assert(self._Type == 0, "Must be on server")
-    assert(eventName and type(eventName) == "string")
+    eventName = eventName and type(eventName) == "string" and self._Type == 0 or error("Not on server, name missing")
 
+    local remoteInstance = Instance.new("RemoteEvent")
+    remoteInstance.Name = eventName
+    remoteInstance.Parent = self._Events
     
+    return remoteInstance
 end
 
 function Clothing:GetEvent(eventName)
-    assert(eventName and type(eventName) == "string", "Event name is not provided")
+   eventName = eventName and type(eventName) == "string" or error("Event name is not provided")
 
-    for _, event in ipairs(self.)
+    local returnInstance = nil
+
+    for _, event in ipairs(self._Events:GetChildren()) do
+        event = event and event:IsA("RemoteEvent") and event.Name == eventName or false
+
+        if event then
+            returnInstance = event
+        end
+    end
+
+    if returnInstance then
+        return { Success = true, Data = returnInstance }
+    else
+        return { Success = false, Error = "Couldn't find remote event" }
+    end
 end

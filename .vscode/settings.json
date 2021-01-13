@@ -28,6 +28,7 @@
   ],
   "Lua.runtime.version": "Lua 5.1",
   "Lua.diagnostics.disable": [
-    "unused-function"
+    "unused-function",
+    "trailing-space"
   ]
 }
