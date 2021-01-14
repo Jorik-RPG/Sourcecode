@@ -23,12 +23,8 @@ function Framework.new(settings)
     }, Framework)
 
     self.Started = function()
-        return Promise.new(function(resolve)
-            if self._Started then resolve() else
-                repeat
-                    runService.Stepped:Wait()
-                until self._Started and resolve()
-            end
+        return Promise.fromEvent(runService.Heartbeat, function(resolve)
+            return self._Started
         end)
     end
 
