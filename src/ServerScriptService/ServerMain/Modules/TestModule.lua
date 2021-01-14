@@ -1,6 +1,6 @@
 return {
     ClassName = "TestModule";
-    Run = function()
+    Run = function(Framework)
         print("This is a test module!")
     end;
 }
