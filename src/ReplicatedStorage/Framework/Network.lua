@@ -32,6 +32,7 @@ function Framework.new()
         self._Functions.Name = "Functions"
         self._Comunication.Name = "Comunication"
 
+        self._Comunication.Parent = script
         self._Events.Parent = self._Comunication
         self._Functions.Parent = self._Comunication
     end
