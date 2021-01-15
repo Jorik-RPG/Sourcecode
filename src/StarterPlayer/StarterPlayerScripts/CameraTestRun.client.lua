@@ -6,4 +6,3 @@ local Character = Player.CharacterAdded:Wait()
 
 local PlayerScripts = Player.PlayerScripts
 local CameraFramework = PlayerScripts.Framework.CameraFramework
-

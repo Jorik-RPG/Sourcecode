@@ -1,3 +1,6 @@
+--@@ Author 4thAxis
+--/1/14/2021
+
 local BattleCam = {}
 BattleCam.__index = BattleCam
 
@@ -9,6 +12,11 @@ function BattleCam.new(Camera)
 
     }, BattleCam)
 end
+
+function BattleCam:LockToPlayer()
+    
+end
+
 
 function BattleCam:SwirlAround()
 
