@@ -10,9 +10,10 @@
 | Functions                  | camelCase            |
 | Instance Variables         | PascalCase           |
 | Private Instance Variables | _PascalCase          |
+| Methods                    | PascalCase           |
 
 ---
-## Code layout
+## Code Layout/Template
 ```Lua
 -- SERVICES
 
@@ -75,4 +76,76 @@ function Framework.new(settings)
 end
 
 return Framework
+```
+---
+## Example Framework Module
+
+```Lua
+return function(framework, ...)
+    -- Required Framework Modules
+    local Roact = framework.Roact
+    local Network = framework.Network
+    local Console = framework.Console.new(script)
+
+    -- Registering events
+    local exampleEvent = Network:GetEvent("Example")
+
+    -- Connecting the example event
+    local tempConnection = exampleEvent:Connect(function()
+        Console:Print("Example event fired!")
+
+        tempConnection:Disconnect()
+    end)
+end
+```
+
+## Example Framework Component
+
+```Lua
+local ExampleClass = {}
+ExampleClass.__index = ExampleClass
+ExampleClass.ClassName = "Example"
+
+function ExampleClass.new(self)
+    self = setmetatable(self, ExampleClass)
+
+    self._LocalInstance = false
+    self._DylType = true
+
+    return self
+end
+
+-- Just like creating anyother class after that
+```
+
+## Example Class Using Framework
+
+```Lua
+--[[
+    Framework should automatically be passed through the constructor, as should any other module you use. Otherwise this can lead to cylindrical requires.
+]]
+return function ClassBuilder(framework)
+    local Console = framework.Console.new("EXAMPLE?CLASS")
+
+    local ExampleClass = {}
+    ExampleClass.__index = ExampleClass
+    ExampleClass.ClassName = "Example"
+
+    function ExampleClass.new(framework)
+        local self = setmetatable({},ExampleClass)
+
+        self._LocalInstance = true
+        self._DylType = false
+        self.Console = framework.Console.new("EXAMPLE?CLASS")
+
+
+        self.Console:Debug("Example class is loaded")
+
+        return self
+    end
+
+    return ExampleClass
+end
+
+-- Just like creating anyother class after that
 ```

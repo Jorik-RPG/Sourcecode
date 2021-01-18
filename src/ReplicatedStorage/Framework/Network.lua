@@ -1,29 +1,32 @@
 --@@ Author Trix
 
-local Framework = {}
-Framework.__index = Framework
-Framework.ClassName = "FrameworkNetwork"
+local Network = {}
+Network.__index = Network
+Network.ClassName = "Network"
 
 -- Services
-local runService = game:GetService("RunService")
+local RunService = game:GetService("RunService")
 
 -- Objects
 local comunicationFolder = script:FindFirstChild("Comunication")
 local eventFolder = script:FindFirstChild("Events")
 local functionFolder = script:FindFirstChild("Functions")
 
+-- Statics
+local IS_SERVER = RunService:IsServer()
+local IS_CLIENT = not IS_SERVER
+
 --[[ constructor ]]--
 
-function Framework.new()
-    local self = setmetatable({
-        _Queue = {},
-        _Type = runService:IsServer() and 0 or runService:IsClient() and 1,
-        _Events = eventFolder or Instance.new("Folder"),
-        _Functions = functionFolder or Instance.new("Folder"),
-        _Comunication = comunicationFolder or Instance.new("Folder"),
+function Network.new(self)
+    self = setmetatable(self, Network)
+    self._Events = eventFolder or Instance.new("Folder")
+    self._Functions = functionFolder or Instance.new("Folder")
+    self._Comunication = comunicationFolder or Instance.new("Folder")
+    self._Started = false
 
-        _Started = false
-    }, Framework)
+    -- Referenced modules
+    self.Console = self.Console.new(script)
 
     if self._Events.Name == "Events" and self._Functions.Name == "Functions" then
         self._Started = true
@@ -40,8 +43,9 @@ function Framework.new()
     return self
 end
 
-function Framework:CreateEvent(eventName)
-    eventName = eventName and type(eventName) == "string" and self._Type == 0 or error("Not on server, name missing")
+function Network:CreateEvent(eventName)
+    self.Console:Assert(eventName and type(eventName) == "string", "Event name is not provided")
+    self.Console:Assert(IS_SERVER, "Must be running on the server")
 
     local remoteInstance = Instance.new("RemoteEvent")
     remoteInstance.Name = eventName
@@ -50,16 +54,23 @@ function Framework:CreateEvent(eventName)
     return remoteInstance
 end
 
-function Framework:GetEvent(eventName)
-    eventName = eventName and type(eventName) == "string" or error("Event name is not provided")
+function Network:CreateFunction(functionName)
+    self.Console:Assert(functionName and type(functionName) == "string", "Function name is not provided")
+    self.Console:Assert(IS_SERVER, "Must be running on the server")
+end
+
+function Network:GetEvent(eventName)
+    self.Console:Assert(eventName and type(eventName) == "string", "Event name is not provided")
 
     local returnInstance = nil
 
     for _, event in ipairs(self._Events:GetChildren()) do
-        event = event and event:IsA("RemoteEvent") and event.Name == eventName or false
+        if not event:IsA("RemoteEvent") and event.Name ~= eventName then continue end
 
         if event then
             returnInstance = event
+
+            break
         end
     end
 
@@ -70,4 +81,4 @@ function Framework:GetEvent(eventName)
     end
 end
 
-return Framework
+return Network

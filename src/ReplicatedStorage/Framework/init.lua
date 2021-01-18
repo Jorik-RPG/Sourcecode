@@ -2,22 +2,30 @@
 
 local Framework = {}
 Framework.__index = Framework
+Framework.ClassName = "Framework"
 
 -- Services
-local httpService = game:GetService("HttpService")
-local runService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
 
 -- Modules
 local Promise = require(script.Parent.Packages.Promise)
 
+--[[
+    {
+        PathToLocal = "Folder",
+        PathToShared = "Folder" or nil,
+        PathToPackages = "Folder" or nil
+    }
+]]
 function Framework.new(settings)
     settings = settings or error("Framework.new: Didn't provide settings argument")
 
     local self = setmetatable({
         Roact = require(script.Parent.Packages.Roact),
-        Local = ( settings.PathToLocal and settings.PathToLocal:GetDesendants() ) or error("Local modules path needed"),
-        Shared = settings.PathToLocal and settings.PathToShared:GetDesendants() or false,
-        Packages = settings.PathToPackages and settings.PathToPackages:GetDesendants() or false,
+        Local = ( settings.PathToLocal and settings.PathToLocal:GetDescendants() ) or error("Local modules path needed"),
+        Shared = ( settings.PathToShared and settings.PathToShared:GetDescendants() ) or false,
+        Packages = ( settings.PathToPackages and settings.PathToPackages:GetDescendants() ) or false,
 
         _Started = false
     }, Framework)
@@ -28,8 +36,13 @@ function Framework.new(settings)
         end)
     end
 
+    -- Referenced built in modules
     self.Modules = require(script.Modules).new(self)
+    
     self.Network = require(script.Network).new()
+    self.Database = require(script.Database).new(self)
+    
+    self.Console = require(script.Console)
 
     self._Started = true
 

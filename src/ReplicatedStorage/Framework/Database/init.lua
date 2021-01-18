@@ -6,38 +6,20 @@ local Database = {}
 local RunService = game:GetService("RunService")
 
 -- Statics
+local IS_STUDIO = RunService:IsStudio()
 local IS_SERVER = RunService:IsServer()
-local IS_CLIENT = RunService:IsClient()
+local IS_CLIENT = not IS_SERVER
 
 function Database.new(self)
+    if IS_STUDIO then return self end
+
     self = metatable(self, Database)
 
+    ---replicate function "Update"
     if IS_SERVER then
-        self.FileSystem = {}
 
-        for _, module in ipairs(script.Server:GetChildren()) do
-            if module:IsA("Module") then
-                self.FileSystem[module.Name] = require(module)
-            end
-        end
+    else
 
-        for _, module in ipairs(script.Client:GetChildren()) do
-            if module:IsA("Module") then
-                self.FileSystem[module.Name] = require(module)
-            end
-        end
-
-        for index, key in pairs(ModuleTable) do
-            key = key and type(key) == "Table" or error("Something isn't a table in Module table")
-
-            for functionName, funct in pairs(key) do
-                if type(funct) == "Function" and functionName == "Update" then
-                    self.Network:GetEvent(("%s-%s"):format(index, functionName)):Connect(funct)
-                end
-            end
-        end
-    elseif IS_CLIENT then
-        script.Server:Destroy()
     end
 
     return self
