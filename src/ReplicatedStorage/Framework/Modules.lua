@@ -1,7 +1,7 @@
 --@@ Author Trix
 
-local Modules = {}
-Modules.__index = Modules
+local Modules     = {}
+Modules.__index   = Modules
 Modules.ClassName = "Modules"
 
 -- Services
@@ -9,10 +9,10 @@ local httpService = game:GetService("HttpService")
 
 --[[ constructor ]]
 
----@param self table
+---@param framework table
 ---@return table
-function Modules.new(self)
-    return setmetatable(self, Modules)
+function Modules.new(framework)
+    return setmetatable(framework, Modules)
 end
 
 --[[ Local module methods ]]

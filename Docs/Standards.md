@@ -106,13 +106,21 @@ local ExampleClass = {}
 ExampleClass.__index = ExampleClass
 ExampleClass.ClassName = "Example"
 
-function ExampleClass.new(self)
-    self = setmetatable(self, ExampleClass)
+function ExampleClass.new()
+    --- I guess we should just go with trix's method, if your going to set a metatable to the extendedfrom that'll just be worst indexing time.
+  
+    return setmetatable({
+        _LocalInstance = false,
+        _DylType = true
+    }, ExtendedFrom.new())
+   
 
-    self._LocalInstance = false
-    self._DylType = true
-
-    return self
+   --[[
+       class Example extends ExampleFramework {
+           you can call everything defined in the ExampleFramework here.
+           
+       }
+   ]]
 end
 
 -- Just like creating anyother class after that
@@ -124,24 +132,27 @@ end
 --[[
     Framework should automatically be passed through the constructor, as should any other module you use. Otherwise this can lead to cylindrical requires.
 ]]
-return function ClassBuilder(framework)
+return function(framework)
     local Console = framework.Console.new("EXAMPLE?CLASS")
 
     local ExampleClass = {}
     ExampleClass.__index = ExampleClass
     ExampleClass.ClassName = "Example"
 
-    function ExampleClass.new(framework)
-        local self = setmetatable({},ExampleClass)
+    function ExampleClass.new() -- why cant we just return the metatable here too?
+        local self = setmetatable({
+            _LocalInstance = false,
+            _DylType = false,
+        },ExampleClass)
 
-        self._LocalInstance = true
-        self._DylType = false
-        self.Console = framework.Console.new("EXAMPLE?CLASS")
-
-
+        self:Initialize()
         self.Console:Debug("Example class is loaded")
 
         return self
+    end
+
+    function ExampleClass:Initialize()
+
     end
 
     return ExampleClass

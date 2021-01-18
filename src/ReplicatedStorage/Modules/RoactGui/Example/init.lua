@@ -8,10 +8,12 @@ local Player = Players.LocalPlayer
 
 local function greetPlayer(player)
     return Roact.CreateElement("ScreenGui", {}, {
-        TextLabel = Roact.CreateElement("TextLabel", {
+        WelcomeLabel = Roact.CreateElement("TextLabel", {
             Size = UDim2.fromOffset(400, 300),
-            Text = ("Hello %s"):format(player.Name) -- hello trix
-        })
+            Position = UDim2.fromOffset(500,800),
+            Text = ("Hello %s"):format(player.Name)
+        }),
+        PlayButton = Roact.CreateElement("")
     })
 end
 
@@ -21,6 +23,4 @@ return function(framework)
     local example = greetPlayer(Player)
 
     Roact.mount(example, Player.PlayerGui)
-
-    print("Created :)))")
 end

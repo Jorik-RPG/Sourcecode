@@ -1,12 +1,12 @@
 --@@ Author Trix; Modified by 4thAxis
 
 local Framework = {}
-Framework.__index = Framework
+Framework.__index   = Framework
 Framework.ClassName = "Framework"
 
 -- Services
 local HttpService = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
+local RunService  = game:GetService("RunService")
 
 -- Modules
 local Promise = require(script.Parent.Packages.Promise)
@@ -22,27 +22,25 @@ function Framework.new(settings)
     settings = settings or error("Framework.new: Didn't provide settings argument")
 
     local self = setmetatable({
-        Roact = require(script.Parent.Packages.Roact),
-        Local = ( settings.PathToLocal and settings.PathToLocal:GetDescendants() ) or error("Local modules path needed"),
-        Shared = ( settings.PathToShared and settings.PathToShared:GetDescendants() ) or false,
+        Roact    = require(script.Parent.Packages.Roact),
+        Local    = ( settings.PathToLocal    and settings.PathToLocal:GetDescendants() )    or error("Local modules path needed"),
+        Shared   = ( settings.PathToShared   and settings.PathToShared:GetDescendants() )   or false,
         Packages = ( settings.PathToPackages and settings.PathToPackages:GetDescendants() ) or false,
 
         _Started = false
     }, Framework)
 
     self.Started = function()
-        return Promise.fromEvent(runService.Heartbeat, function(resolve)
+        return Promise.fromEvent(RunService.Heartbeat, function(resolve)
             return self._Started
         end)
     end
 
     -- Referenced built in modules
-    self.Modules = require(script.Modules).new(self)
-    
-    self.Network = require(script.Network).new()
+    self.Console  = require(script.Console)
+    self.Modules  = require(script.Modules).new(self)
+    self.Network  = require(script.Network).new(self)
     self.Database = require(script.Database).new(self)
-    
-    self.Console = require(script.Console)
 
     self._Started = true
 

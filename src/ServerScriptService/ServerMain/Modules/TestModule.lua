@@ -1,6 +1,8 @@
 return {
     ClassName = "TestModule";
     Run = function(framework)
-        print("This is a test module!")
+        local Console = framework.Console.new(script)
+
+        Console:Print("Loaded")
     end;
 }

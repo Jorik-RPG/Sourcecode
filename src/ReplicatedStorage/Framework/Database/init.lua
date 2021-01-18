@@ -10,10 +10,10 @@ local IS_STUDIO = RunService:IsStudio()
 local IS_SERVER = RunService:IsServer()
 local IS_CLIENT = not IS_SERVER
 
-function Database.new(self)
+function Database.new(framework)
     if IS_STUDIO then return self end
 
-    self = metatable(self, Database)
+    local self = metatable(framework, Database)
 
     ---replicate function "Update"
     if IS_SERVER then
@@ -25,6 +25,4 @@ function Database.new(self)
     return self
 end
 
-return
-
-
+return Database

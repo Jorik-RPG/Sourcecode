@@ -1,7 +1,7 @@
 --@@ Author Trix
 
-local Network = {}
-Network.__index = Network
+local Network     = {}
+Network.__index   = Network
 Network.ClassName = "Network"
 
 -- Services
@@ -9,8 +9,8 @@ local RunService = game:GetService("RunService")
 
 -- Objects
 local comunicationFolder = script:FindFirstChild("Comunication")
-local eventFolder = script:FindFirstChild("Events")
-local functionFolder = script:FindFirstChild("Functions")
+local eventFolder        = script:FindFirstChild("Events")
+local functionFolder     = script:FindFirstChild("Functions")
 
 -- Statics
 local IS_SERVER = RunService:IsServer()
@@ -18,26 +18,26 @@ local IS_CLIENT = not IS_SERVER
 
 --[[ constructor ]]--
 
-function Network.new(self)
-    self = setmetatable(self, Network)
-    self._Events = eventFolder or Instance.new("Folder")
-    self._Functions = functionFolder or Instance.new("Folder")
+function Network.new(framework)
+    local self = setmetatable(framework, Network)
+    self._Events       = eventFolder or Instance.new("Folder")
+    self._Functions    = functionFolder or Instance.new("Folder")
     self._Comunication = comunicationFolder or Instance.new("Folder")
-    self._Started = false
+    self._Started      = false
 
     -- Referenced modules
-    self.Console = self.Console.new(script)
+    self.Console = framework.Console.new(script)
 
     if self._Events.Name == "Events" and self._Functions.Name == "Functions" then
         self._Started = true
     else
-        self._Events.Name = "Events"
-        self._Functions.Name = "Functions"
-        self._Comunication.Name = "Comunication"
+        self._Events.Name         = "Events"
+        self._Functions.Name      = "Functions"
+        self._Comunication.Name   = "Comunication"
 
         self._Comunication.Parent = script
-        self._Events.Parent = self._Comunication
-        self._Functions.Parent = self._Comunication
+        self._Events.Parent       = self._Comunication
+        self._Functions.Parent    = self._Comunication
     end
 
     return self
@@ -73,12 +73,9 @@ function Network:GetEvent(eventName)
             break
         end
     end
-
-    if returnInstance then
-        return { Success = true, Data = returnInstance }
-    else
-        return { Success = false, Error = "Couldn't find remote event" }
-    end
+    
+    -- this will have a less cognitive complexity but obviously this won't lower your cyclomatic complexity
+    return ( returnInstance and { Success = true, Data = returnInstance } ) or { Success = false, Error = "Couldn't find remote event" };
 end
 
 return Network
