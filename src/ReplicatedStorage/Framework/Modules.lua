@@ -12,7 +12,11 @@ local httpService = game:GetService("HttpService")
 ---@param framework table
 ---@return table
 function Modules.new(framework)
-    return setmetatable(framework, Modules)
+    local self = setmetatable(framework, Modules)
+
+    print(self._Started)
+
+    return self
 end
 
 --[[ Local module methods ]]
@@ -54,7 +58,7 @@ function Modules:GetAllLocal(limit)
         local returnTable = {}
 
         for _, module in ipairs(self.Local) do
-            if module:IsA("Module") then
+            if module:IsA("ModuleScript") then
                 returnTable[#returnTable + 1] = module
             end
 
@@ -112,7 +116,7 @@ function Modules:GetAllShared(limit)
         local returnTable = {}
 
         for _, module in ipairs(self.Local) do
-            if module:IsA("Module") then
+            if module:IsA("ModuleScript") then
                 returnTable[#returnTable + 1] = module
             end
 

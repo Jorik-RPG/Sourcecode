@@ -37,10 +37,10 @@ function Framework.new(settings)
     end
 
     -- Referenced built in modules
-    self.Console  = require(script.Console)
-    self.Modules  = require(script.Modules).new(self)
-    self.Network  = require(script.Network).new(self)
-    self.Database = require(script.Database).new(self)
+    self.Console  = require(script:WaitForChild("Console"))
+    self.Modules  = require(script:WaitForChild("Modules"))
+    self.Network  = require(script:WaitForChild("Network")).new(self)
+    self.Database = require(script:WaitForChild("Database")).new(self)
 
     self._Started = true
 
