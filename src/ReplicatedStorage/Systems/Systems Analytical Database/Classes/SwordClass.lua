@@ -36,5 +36,4 @@ end
 function SwordClass:Swing()
 
 end
-
-
+return SwordClass
