@@ -21,7 +21,7 @@ function Console.new(scriptInstance)
 end
 
 function Console:Print(...)
-    print(("[%s][%s] - \n"):format(self.Replication, self.LogName), ..., "\n")
+    print(("[%s][%s] - "):format(self.Replication, self.LogName), ..., "\n")
 end
 
 function Console:Debug(...)

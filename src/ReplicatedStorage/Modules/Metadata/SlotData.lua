@@ -55,8 +55,8 @@ return {
         FailedDatacaches = 0,
         KickTimes = 0,
         DailyTimes = 0,
-
-        LastLogin = 0
+        LastLogin = 0,
+        Nickname = "No name"
     }
 
 }
