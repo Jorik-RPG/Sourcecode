@@ -1,22 +1,23 @@
 --@@ Author Trix
 
-local DataTable = {}
-DataTable.ClassName = "DataTable"
-DataTable.__index = DataTable
+local SlotHandle = {}
+SlotHandle.ClassName = "SlotHandle"
+SlotHandle.__index = SlotHandle
 
 -- Services
 local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
 
 --[[ Public constructor ]]
 
-function DataTable.new(framework)
+function SlotHandle.new(framework)
     local Modules = framework.Modules.new(framework)
     local ProfileService = Modules:GetPackage("ProfileService")
 
     local SlotData = Modules:GetLocal("SlotData")
     local ErrorCodes = Modules:GetLocal("ErrorCodes")
 
-    local self = setmetatable(framework, DataTable)
+    local self = setmetatable(framework, SlotHandle)
 
     self.Console = self.Console.new(script)
     self.ErrorCodes = ErrorCodes["DataErrors"]
@@ -25,7 +26,7 @@ function DataTable.new(framework)
     self.ProfileStore = ProfileService.GetProfileStore("ProfileData", {})
 end
 
-function DataTable:CreateProfileSlot(player)
+function SlotHandle:CreateProfileSlot(player, callback)
     for i=1, 3 do
         local profile = self:LoadProfile(player)
 
@@ -36,14 +37,44 @@ function DataTable:CreateProfileSlot(player)
         if not slot then
             table.insert(profile.Data, i, self.SlotDefaults)
 
+            profile.Data[i].Hash = HttpService:GenerateGUID()
+
+            callback{ Success = true }
+
             break
         else
            continue
         end
     end
+
+    callback{ Success = false, Error = "No slots free to overwrite." } return
 end
 
-function DataTable:LoadProfile(player)
+function SlotHandle:DeleteProfileSlot(player, slotHash, callback)
+    console:Assert(slotHash, "Missing paramater 'SlotNumber'")
+
+    local profile = self.Profiles[player.UserId] or self:LoadProfile(player)
+
+    if type(slotHash) == "number" then
+        if profile.Data[slotHash] then
+            table.remove(profile.Data, slotHash)
+
+            callback{ Success = true } return
+        end
+    elseif type(slotHash) == "string" then
+        for i=1, #profile.Data do
+            if profile.Data[i].Hash == slotHash then
+                table.remove(profile.Data, i)
+
+                callback{ Success = true } return
+            end
+        end
+    end
+
+    callback{ Success = false, Error = "Slot data doesn't exist." } return
+end
+
+function SlotHandle:LoadProfile(player, callback)
     if not self.Profiles[player.UserId] then
         local profile = self.ProfileStore:LoadProfileAsync(("Player_%s"):format(player.UserId), "ForceLoad")
 
@@ -69,13 +100,13 @@ function DataTable:LoadProfile(player)
         end
     end
 
-    return self.Profiles[player.UserId]
+    callback{ Success = true, Data = self.Profiles[player.UserId] } return
 end
 
-function DataTable:SaveProfile(player)
+function SlotHandle:SaveProfile(player, callback)
     if not self.Profiles[player.UserId] then return { Success = false, Error = "Profile is non existent" } end
 
     
 end
 
-return DataTable
+return SlotHandle

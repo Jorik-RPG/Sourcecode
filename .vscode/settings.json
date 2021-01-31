@@ -22,12 +22,13 @@
       "unpack"
   ],
   "Lua.diagnostics.disable": [
-      "unused-local",
-      "empty-block",
-      "lowercase-global",
-      "unused-function",
-      "undefined-global",
-      "undefined-field",
-      "redundant-parameter"
+    "unused-local",
+    "empty-block",
+    "lowercase-global",
+    "unused-function",
+    "undefined-global",
+    "undefined-field",
+    "redundant-parameter",
+    "incorrect-call-arguments"
   ]
 }
