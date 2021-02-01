@@ -81,6 +81,8 @@ function SlotHandle:LoadProfile(player, callback)
         if profile then
             profile:Reconcile()
 
+            profile:AddMetaTag("Data-1")
+
             -- Profile could've been loaded somewhere else
             profile:ListenToRelease(function()
                 self.Profiles[player.UserId] = nil
@@ -103,10 +105,24 @@ function SlotHandle:LoadProfile(player, callback)
     callback{ Success = true, Data = self.Profiles[player.UserId] } return
 end
 
-function SlotHandle:SaveProfile(player, callback)
-    if not self.Profiles[player.UserId] then return { Success = false, Error = "Profile is non existent" } end
+function SlotHandle:SaveProfile(player, forcesave, callback)
+    local profile = self.Profiles[player.UserId]
 
-    
+    if not profile then callback{ Success = false, Error = "Profile is non existent" } return end
+
+    if profile.Data.LastSaved and profile.Data.LastSaved - DateTime.now() then
+        profile.Data.LastSaved = DateTime.now()
+
+        profile:Save()
+    elseif forcesave then
+        profile.Data.LastSaved = DateTime.now()
+
+        profile:Save()
+    elseif not profile.LastSaved then
+        profile.Data.LastSaved = DateTime.now()
+
+        profile:Save()
+    end
 end
 
 return SlotHandle
