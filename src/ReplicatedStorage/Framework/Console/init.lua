@@ -21,24 +21,24 @@ function Console.new(scriptInstance)
 end
 
 function Console:Print(...)
-    print(("[%s][%s] - "):format(self.Replication, self.LogName), ..., "\n")
+    print(("[%s][%s] - "):format(self.Replication, self.LogName), ...)
 end
 
 function Console:Debug(...)
     if not IS_STUDIO then return end
 
     local traceback = debug.traceback(nil, 2)
-    warn(("[DEBUG][%s][%s] - "):format(self.Replication, self.LogName), ..., "\nTraceback:", traceback)
+    warn(("[DEBUG][%s][%s] - "):format(self.Replication, self.LogName), ...)
 end
 
 function Console:Warn(...)
     local traceback = debug.traceback(nil, 2)
-    warn(("[WARNING][%s][%s] - "):format(self.Replication, self.LogName), ..., "\nTraceback:", traceback)
+    warn(("[WARNING][%s][%s] - "):format(self.Replication, self.LogName), ...)
 end
 
 function Console:Error(...)
     local traceback = debug.traceback(nil, 2)
-    warn(("[ERROR][%s][%s] - "):format(self.Replication, self.LogName), ..., "\nTraceback:", traceback)
+    warn(("[ERROR][%s][%s] - "):format(self.Replication, self.LogName), ...)
     error("SEE LAST WARN")
 end
 

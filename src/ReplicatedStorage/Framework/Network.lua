@@ -73,7 +73,7 @@ function Network:GetEvent(eventName)
             break
         end
     end
-    
+
     -- this will have a less cognitive complexity but obviously this won't lower your cyclomatic complexity
     return ( returnInstance and { Success = true, Data = returnInstance } ) or { Success = false, Error = "Couldn't find remote event" };
 end

@@ -31,7 +31,7 @@ function Framework.new(settings)
     }, Framework)
 
     self.Started = function()
-        return Promise.fromEvent(RunService.Heartbeat, function(resolve)
+        return Promise.fromEvent(RunService.PreRender, function(resolve)
             return self._Started
         end)
     end
