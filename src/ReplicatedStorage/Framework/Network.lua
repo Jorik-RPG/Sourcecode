@@ -57,6 +57,12 @@ end
 function Network:CreateFunction(functionName)
     self.Console:Assert(functionName and type(functionName) == "string", "Function name is not provided")
     self.Console:Assert(IS_SERVER, "Must be running on the server")
+
+    local remoteInstance = Instance.new("RemoteFunction")
+    remoteInstance.Name = functionName
+    remoteInstance.Parent = self._Functions
+
+    return remoteInstance
 end
 
 function Network:GetEvent(eventName)
@@ -78,12 +84,22 @@ function Network:GetEvent(eventName)
     return ( returnInstance and { Success = true, Data = returnInstance } ) or { Success = false, Error = "Couldn't find remote event" };
 end
 
+function Network:GetFunction(functionName)
+    self.Console:Assert(functionName and type(functionName) == "string", "Function name is not provided")
+
+    local returnInstance = nil
+
+    for _, function in ipairs(self._Functions:GetChildren()) do
+        if not function:IsA("RemoteFunction") and function.Name ~= functionName then continue end
+
+        if function then
+            returnInstance = function
+
+            break
+        end
+    end
+    
+    return ( returnInstance and { Success = true, Data = returnInstance } ) or { Success = false, Error = "Couldn't find remote function" };
+end
+
 return Network
-
-
-
-
-
-
-
-
