@@ -1,0 +1,5 @@
+return {
+	"Warrior",
+	"Mage",
+	"Paladin"
+}
