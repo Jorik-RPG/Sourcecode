@@ -31,5 +31,6 @@
     "redundant-parameter",
     "incorrect-call-arguments",
     "trailing-space"
-  ]
+  ],
+  "Lua.runtime.version": "Luau"
 }
