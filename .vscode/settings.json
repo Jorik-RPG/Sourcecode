@@ -29,6 +29,7 @@
     "undefined-global",
     "undefined-field",
     "redundant-parameter",
-    "incorrect-call-arguments"
+    "incorrect-call-arguments",
+    "trailing-space"
   ]
 }

@@ -2,37 +2,32 @@
   "name": "project",
   "tree": {
     "$className": "DataModel",
-    "Chat": {
-      "$className": "Chat",
-      "$ignoreUnknownInstances": true,
-      "$path": "src/Chat"
-    },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
       "$ignoreUnknownInstances": true,
-      "$path": "src/ReplicatedStorage"
+      "$path": "src/clientshared"
     },
     "ServerScriptService": {
       "$className": "ServerScriptService",
       "$ignoreUnknownInstances": false,
-      "$path": "src/ServerScriptService"
+      "$path": "src/server"
     },
-    "ReplicatedFirst": {
-      "$className": "ReplicatedFirst",
+    "ServerStorage": {
+      "$className": "ServerStorage",
       "$ignoreUnknownInstances": false,
-      "$path": "src/ReplicatedFirst"
+      "$path": "src/servershared"
     },
     "StarterPlayer": {
       "$className": "StarterPlayer",
       "StarterCharacterScripts": {
         "$className": "StarterCharacterScripts",
         "$ignoreUnknownInstances": true,
-        "$path": "src/StarterPlayer/StarterCharacterScripts"
+        "$path": "src/client/startercharacter"
       },
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "$ignoreUnknownInstances": false,
-        "$path": "src/StarterPlayer/StarterPlayerScripts"
+        "$path": "src/client/starterplayer"
       },
       "$ignoreUnknownInstances": true
     }
