@@ -7,8 +7,8 @@
 | Modules/Classes            | PascalCase           |
 | Constants                  | SCREAMING_SNAKE_CASE |
 | Local Variables            | camelCase            |
-| Functions                  | camelCase            |
-| Instance Variables         | PascalCase           |
+| Functions                  | PascalCase           |
+| Instance Variables         | camelCase            |
 | Private Instance Variables | _PascalCase          |
 | Methods                    | PascalCase           |
 
@@ -27,136 +27,71 @@
 
 -- BODY
 ```
+
 ---
-## Example Class
-```Lua
--- SERVICES
-local HttpService = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
+## Example Module
 
--- MODULES
-local Promise = require(script.Parent.Packages.Promise)
+```lua
+--@@ Author Name
 
--- CONSTANTS
+-- Services
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
 
--- VARIABLES
+--
+local RandomPlayerModule = require(ReplicatedStorage:WaitForChild("Libs"):WaitForChild("FirstParty").PlayerModule)
 
--- FUNCTIONS
+--
+local USE_PRINT = false
 
--- BODY
-local Framework = {}
-Framework.__index = Framework
+--
+local startMessage = "[LOG]"
 
-function Framework.new(settings)
-    settings = settings or error("Framework.new: Didn't provide settings argument")
+--
+local Example = {
+  Messages = {}
+} do
 
-    -- self definition
-    local self = setmetatable({
-        Roact = require(script.Parent.Packages.Roact),
-        Local = ( settings.PathToLocal and settings.PathToLocal:GetDescendants() ) or error("Local modules path needed"),
-        Shared = ( settings.PathToShared and settings.PathToShared:GetDescendants() ) or false,
-        Packages = ( settings.PathToPackages and settings.PathToPackages:GetDescendants() ) or false,
-
-        _Started = false
-    }, Framework)
-
-    self.Started = function()
-        return Promise.fromEvent(runService.Heartbeat, function(resolve)
-            return self._Started
-        end)
-    end
-
-    self.Modules = require(script.Modules).new(self)
-    self.Network = require(script.Network).new()
-    self.Database = require(script.Database).new(self)
-
-    self._Started = true
-
-    return self
-end
-
-return Framework
-```
----
-## Example Framework Module
-
-```Lua
-return function(framework, ...)
-    -- Required Framework Modules
-    local Roact = framework.Roact
-    local Network = framework.Network
-    local Console = framework.Console.new(script)
-
-    -- Registering events
-    local exampleEvent = Network:GetEvent("Example")
-
-    -- Connecting the example event
-    local tempConnection = exampleEvent:Connect(function()
-        Console:Print("Example event fired!")
-
-        tempConnection:Disconnect()
-    end)
-end
-```
-
-## Example Framework Component
-
-```Lua
-local ExampleClass = {}
-ExampleClass.__index = ExampleClass
-ExampleClass.ClassName = "Example"
-
-function ExampleClass.new()
-    --- I guess we should just go with trix's method, if your going to set a metatable to the extendedfrom that'll just be worst indexing time.
+  function Example.new(messageContent)
+    messageContent = type(messageContent) == "string" and messageContent or error("Invalid data type for 'messageContent'; a string is expected") -- or assert() it doesn't matter
+    
+    Example.Messages[#Example.Messages + 1] = messageContent
+  end
   
-    return setmetatable({
-        _LocalInstance = false,
-        _DylType = true
-    }, ExtendedFrom.new())
-   
+  function Example.PrintAll()
+    
+    for _, message in ipairs(Example.Messages)
+      print(startMessage, message)
+    end
+    
+  end
 
-   --[[
-       class Example extends ExampleFramework {
-           you can call everything defined in the ExampleFramework here.
-           
-       }
-   ]]
 end
 
--- Just like creating anyother class after that
+return Example
 ```
 
-## Example Class Using Framework
+---
+## Example Script / LocalScript
 
-```Lua
---[[
-    Framework should automatically be passed through the constructor, as should any other module you use. Otherwise this can lead to cylindrical requires.
-]]
-return function(framework)
-    local Console = framework.Console.new("EXAMPLE?CLASS")
+```lua
+--@@ Author Name
 
-    local ExampleClass = {}
-    ExampleClass.__index = ExampleClass
-    ExampleClass.ClassName = "Example"
+-- Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-    function ExampleClass.new() -- why cant we just return the metatable here too?
-        local self = setmetatable({
-            _LocalInstance = false,
-            _DylType = false,
-        },ExampleClass)
+--
+local ExampleClientModule = require(ReplicatedStorage:WaitForChild("Libs"):WaitForChild("ThirdParty").MadworkSignal)
 
-        self:Initialize()
-        self.Console:Debug("Example class is loaded")
+--
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
 
-        return self
-    end
-
-    function ExampleClass:Initialize()
-
-    end
-
-    return ExampleClass
+--
+for _, obj in ipairs(character:GetChildren()) do
+  print(obj.Name)
 end
-
--- Just like creating anyother class after that
 ```
+
+***Upated as of 07 / 06 / 21***
